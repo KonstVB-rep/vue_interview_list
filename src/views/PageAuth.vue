@@ -7,8 +7,8 @@ import { useRouter } from 'vue-router'
 
 /*ref*/
 const isLogin = ref<boolean>(true)
-const email = ref<string>('')
-const password = ref<string>('')
+const email = ref<string>('test@test.com')
+const password = ref<string>('1234567')
 const isLoading = ref<boolean>(false)
 
 /*use*/
