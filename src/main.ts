@@ -9,8 +9,21 @@ import { initializeApp } from 'firebase/app'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 
-import { ToastService, Menubar, Button, InputText, Toast, ProgressSpinner, Card } from 'primevue'
+import {
+  ConfirmationService,
+  ToastService,
+  ConfirmDialog,
+  Menubar,
+  Button,
+  InputText,
+  Toast,
+  ProgressSpinner,
+  Card,
+  DataTable,
+  Column,
+} from 'primevue'
 
+import InlineMessage from 'primevue/inlinemessage'
 import App from './App.vue'
 import router from './router'
 
@@ -29,6 +42,7 @@ initializeApp(firebaseConfig)
 const app = createApp(App)
 
 app.use(ToastService)
+app.use(ConfirmationService)
 app.use(createPinia())
 app.use(router)
 app.use(PrimeVue, {
@@ -43,5 +57,9 @@ app.component('app-input-text', InputText)
 app.component('app-toast', Toast)
 app.component('app-progress-spinner', ProgressSpinner)
 app.component('app-card', Card)
+app.component('app-data-table', DataTable)
+app.component('app-column', Column)
+app.component('app-confirm-dialog', ConfirmDialog)
+app.component('app-inline-message', InlineMessage)
 
 app.mount('#app')

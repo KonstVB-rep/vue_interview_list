@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router';
-import type { IInterview } from '@/interfaces';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'vue-router'
+import type { IInterview } from '@/interfaces'
+import { getAuth } from 'firebase/auth'
+import { getFirestore, setDoc, doc } from 'firebase/firestore'
+import { v4 as uuidv4 } from 'uuid'
+import { useUserStore } from '@/stores/user'
 
-const db = getFirestore();
-const router = useRouter();
+const db = getFirestore()
+const router = useRouter()
 
 const company = ref<string>('')
 const vacancyLink = ref<string>('')
@@ -16,13 +17,12 @@ const contactWhatsApp = ref<string>('')
 const contactPhone = ref<string>('')
 const hrName = ref<string>('')
 
-
 const loading = ref<boolean>(false)
 const disabledSaveButton = computed(() => {
   return !(company.value && vacancyLink.value && contactTelegram.value)
 })
 
-const addNewInterview = async ():Promise<void> => {
+const addNewInterview = async (): Promise<void> => {
   loading.value = true
   const payload: IInterview = {
     id: uuidv4(),
@@ -35,13 +35,12 @@ const addNewInterview = async ():Promise<void> => {
     createdAt: new Date(),
   }
 
-  const useriD = getAuth().currentUser?.uid
-  if (useriD) {
-    await setDoc(doc(db, `users/${useriD}/interviews`,payload.id), payload).then(() => {
-      router.push('/interview')
+  const { userId } = useUserStore()
+  if (userId) {
+    await setDoc(doc(db, `users/${userId}/interviews`, payload.id), payload).then(() => {
+      router.push('/interviews')
     })
   }
-
 }
 </script>
 
